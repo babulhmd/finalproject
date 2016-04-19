@@ -2,6 +2,11 @@
 session_start();
 include "connect.php";
 
+$basefile = basename(__FILE__, '.php');
+include "header.php";
+
+
+
 
 // var_dump($_GET);
 if (isset($_POST['name'])) {
@@ -15,13 +20,16 @@ if (isset($_POST['name'])) {
     if ($password == $row[3]) {
       echo "Log in successfull.";
       $_SESSION['loggedin']= true;
-      $_SESSION['user']= $row[1];
+      // $_SESSION['user']= $row[1];
+      $_SESSION['user']= array(
+        'id' => $row[0],
+      'name' => $row[1], );
     }
   }
   if ($_SESSION['loggedin']) {
     echo "You are ". $_SESSION['user'];
   }
-  header("Location: home.php");
+  header("Location: profile.php");
   die();
 }
 
@@ -58,12 +66,6 @@ if (isset($_POST['name'])) {
        <div class="container">
          <h1>User Log In</h1>
 
-         <nav class="navbar navbar-inverse">
-           <ul class="nav navbar-nav">
-             <li class="active"><a href="home.php">Home</a></li>
-               <li><a href="new.php">New</a></li>
-           </ul>
-         </nav>
 
          <div class="form-group">
 
@@ -72,11 +74,11 @@ if (isset($_POST['name'])) {
            <form class="" action="" method="post">
 
 
-            <table border="1">
-              <tr>
-                <td>Name</td>
-                <td><input type="text" name="name" value=""></td>
-             </tr>
+             <table class="table table-striped table-bordered" style="width:30%">
+               <tr>
+                 <td style="width:10%">Name</td>
+                 <td style="width:90%"><input type="text" name="name" value=""></td>
+              </tr>
               <tr>
                <td>Password</td>
                <td><input type="password" name="password" value=""></td>

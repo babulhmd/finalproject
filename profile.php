@@ -8,30 +8,28 @@ include "header.php";
 
 $done = false;
 $msg = '';
-
-// var_dump($_GET);
+$userid = $_SESSION['user']['id'];
+// var_dump($_SESSION);
 if (isset($_POST['name'])) {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $password1 = $_POST['password1'];
-  $password2 = $_POST['password2'];
 
-  if ($password1==$password2) {
-    $password = md5($_POST['password1']);
-    $sql = $sql = "INSERT INTO `users` (`name`, `email`, `password`) VALUES (\"$name\", \"$email\", \"$password\")";
+  $name = $_POST['name'];
+  $profession = $_POST['profession'];
+  $introduction = $_POST['introduction'];
+  $facebook = $_POST['facebook'];
+  $twitter = $_POST['twitter'];
+
+
+    $sql = $sql = "INSERT INTO `userprofile` (`name`, `profession`, `introduction`, `facebook`, `twitter`)
+    VALUES (\"$name\", \"$profession\", \"$introduction\", \"$facebook\", \"$twitter\")";
   $query = $conn->query($sql);
   if (isset($query)) {
-    $done = true;
+    // $done = true;
 
-    $msg = "User Registration successfull.";
+    $msg = "Profile completed.";
     //header("Location: home.php");
   }
 
-  }else {
-    echo "Password does not match";
   }
-
-}
 
  ?>
 
@@ -64,7 +62,7 @@ if (isset($_POST['name'])) {
 
 
        <div class="container">
-         <h1>User Registration</h1>
+         <h1>User Profile</h1>
 
 
 
@@ -73,24 +71,32 @@ if (isset($_POST['name'])) {
 
 
            <form class="" action="" method="post">
-
+<?php echo "string"; ?>
 
             <table class="table table-striped table-bordered" style="width:30%">
               <tr>
-                <td style="width:10%">Name</td>
-                <td style="width:90%"><input type="text" name="name" value=""></td>
+                <td style="width:10%">User ID</td>
+                <td style="width:90%"><input type="integer" name="userid" value="<?php echo $userid; ?>"></td>
              </tr>
              <tr>
-               <td>Email</td>
-               <td><input type="email" name="email" value=""></td>
+               <td>Name</td>
+               <td><input type="name" name="name" value=""></td>
              </tr>
              <tr>
-               <td>Password</td>
-               <td><input type="password" name="password1" value=""></td>
+               <td>Profession</td>
+               <td><input type="text" name="profession" value=""></td>
              </tr>
              <tr>
-               <td>Password</td>
-               <td><input type="password" name="password2" value=""></td>
+               <td>Introduction</td>
+               <td><input type="text" name="introduction" value=""></td>
+             </tr>
+             <tr>
+               <td>Facebook</td>
+               <td><input type="text" name="facebook" value=""></td>
+             </tr>
+             <tr>
+               <td>Twitter</td>
+               <td><input type="text" name="twitter" value=""></td>
              </tr>
              <tr>
                <td></td>
